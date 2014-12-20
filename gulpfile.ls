@@ -15,20 +15,19 @@ require! {
 
 options =
   src:   path.resolve './src'
-  dist:  path.resolve './dist'
-  build: path.resolve '.'
+  build:  path.resolve '.'
 
 gulp.task \js ->
   gulp
     .src "#{options.src}/**/*.ls"
     .pipe livescript!
-    .pipe gulp.dest options.dist
+    .pipe gulp.dest options.build
 
 gulp.task \css ->
   gulp
     .src "#{options.src}/**/*.styl"
     .pipe stylus use: [nib!]
-    .pipe gulp.dest options.dist
+    .pipe gulp.dest options.build
 
 gulp.task \compile <[js css]>
 
@@ -39,7 +38,7 @@ gulp.task \webpack <[compile]> ->
     entry:
       * "webpack-dev-server/client?http://#host:#port"
       * 'webpack/hot/dev-server'
-      * './dist'
+      * '.'
     output:
       path: __dirname # required for webpack-dev-server
       filename: 'bundle.js'
@@ -52,7 +51,6 @@ gulp.task \webpack <[compile]> ->
         * test: /\.css$/ loader: \style!css
         * test: /\.js$/  loader: \react-hot
         ...
-  webpack config
   server = new WebpackDevServer do
     webpack config
     publicPath: config.output.publicPath

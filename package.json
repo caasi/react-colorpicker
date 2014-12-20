@@ -1,6 +1,6 @@
 {
   "name": "seed",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "the seed for Jade, Stylus, LiveScript and React apps",
   "main": "main.js",
   "scripts": {
