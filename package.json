@@ -1,7 +1,7 @@
 {
-  "name": "seed",
-  "version": "0.0.6",
-  "description": "the seed for Jade, Stylus, LiveScript and React apps",
+  "name": "react-colorpicker",
+  "version": "0.0.1",
+  "description": "Yet another colorpicker.",
   "main": "main.js",
   "scripts": {
     "start": "gulp",

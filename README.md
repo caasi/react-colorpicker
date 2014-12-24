@@ -1,31 +1,10 @@
-# seed -- the seed for Jade, Stylus, LiveScript and React apps
+# react-colorpicker
 
-This project is an application skeleton for anyone who loves Jade, Stylus, LiveScript and React.
+Yet another colorpicker.
 
-## Usage
+## Development
 
 ```bash
 npm install
 npm start
-```
-
-## Layout
-
-```
-# all of the sources
-src/
-  app/
-    *.ls
-    *.styl
-  index.ls
-  index.jade
-
-# all of the files which are created and watched by gulp
-# so you can host them with gh-pages
-dist/
-  **/*.css
-  **/*.js
-  index.js
-bundle.js
-index.html
 ```
