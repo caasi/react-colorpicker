@@ -8,6 +8,7 @@ App = React.createClass do
   render: ->
     div do
       className: 'app'
-      ColorPicker!
+      ColorPicker do
+        onColorChange: -> console.log it
 
 module.exports = App
