@@ -90,19 +90,20 @@ a img {
   border: none;
 }
 html,
-body {
+body,
+#container,
+.app {
   height: 100%;
 }
 body {
   background: #16161d;
 }
-.app {
+.colorpicker {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 600px;
-  height: 600px;
-  cursor: pointer;
+  margin: auto;
+  cursor: cross;
 }

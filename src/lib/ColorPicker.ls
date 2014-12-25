@@ -9,8 +9,8 @@ HSVTriangle = require './HSVTriangle'
 ColorPicker = React.createClass do
   displayName: 'ColorPicker'
   getDefaultProps: ->
-    outer: 200
-    inner: 160
+    outer: 120
+    inner: 90
     h: 0
     s: 0
     v: 1
@@ -25,7 +25,12 @@ ColorPicker = React.createClass do
       ..ring     = new HueRing @props.outer, @props.inner
       ..triangle = new HSVTriangle @props.inner
     $top = $ try document
-    $canvas = $ @refs.canvas.getDOMNode!
+    c = @refs.canvas.getDOMNode!
+    dim = 2 * @props.outer
+    c
+      ..width  = dim
+      ..height = dim
+    $canvas = $ c
     handlers =
       ring:
         mousedown: (e) ~>
@@ -70,27 +75,35 @@ ColorPicker = React.createClass do
     $canvas
       ..mousedown handlers.ring.mousedown
       ..mousedown handlers.triangle.mousedown
-    @update!
-  update: ->
-    ring-width = @props.outer - @props.inner
+    requestAnimationFrame ~> @update @props
+  componentWillReceiveProps: (nprops) ->
+    requestAnimationFrame ~> @update nprops
+  shouldComponentUpdate: (nprops, nstate) -> false # not very React
+  update: ({ outer, inner, h, s, v }:props) ->
+    ring-width = outer - inner
     { ring, triangle } = @state
-    { h, s, v } = @props
-    console.log ring.rotation
-    triangle
-      ..hue = h
-      ..rotation = ring.rotation + toRadian h
-    ring.paint!     if ring.dirty
-    triangle.paint! if triangle.dirty
-    ctx = @refs.canvas.getDOMNode!getContext \2d
-    ctx
-      ..drawImage ring.domElement, 0, 0
-      ..drawImage triangle.domElement, ring-width, ring-width
+    if props is @props or
+       @props.h isnt h
+      triangle
+        ..hue = h
+        ..rotation = ring.rotation + toRadian h
+        ..paint!
+    ring.paint! if ring.dirty
+    if props is @props or
+       @props.outer isnt outer or
+       @props.inner isnt inner
+      dim = 2 * outer
+      c = @refs.canvas.getDOMNode!
+      c
+        ..width  = dim
+        ..height = dim
+      ctx = c.getContext \2d
+      ctx
+        ..drawImage ring.domElement, 0, 0
+        ..drawImage triangle.domElement, ring-width, ring-width
   render: ->
-    dim = 2 * @props.outer
     canvas do
       className: 'colorpicker'
       ref: 'canvas'
-      width:  dim
-      height: dim
 
 module.exports = ColorPicker
